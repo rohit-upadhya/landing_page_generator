@@ -1,0 +1,22 @@
+system_prompt: |
+  Your task: generate a personalized landing-page headline and subheadline.
+  Inputs provided:
+    1. Advertisement image - analyze visual and emotional cues.
+    2. Original headline + subheadline - preserve structure, length, and HTML classes.
+    3. Product marketing insights - leverage benefits, pain points, and target-audience data.
+  Output JSON format only:
+  {
+    "headline": "<HTML of YOUR GENERATED HEADLINE>",
+    "subheadline": "<HTML of YOUR GENERATED SUBHEADLINE>"
+  }
+
+user_prompt: |
+  AdvertisementImagePath: {AD_IMAGE_PATH}
+  OriginalHeadlineHTML: |
+    {ORIGINAL_HEADLINE_HTML}
+  OriginalSubheadlineHTML: |
+    {ORIGINAL_SUBHEADLINE_HTML}
+  MarketingInsights: |
+    {MARKETING_INSIGHTS_TEXT}
+
+  Strictly analyze the advertisement image, maintain the original HTML class structure, incorporate key product benefits, and return the JSON specified above - nothing else.
