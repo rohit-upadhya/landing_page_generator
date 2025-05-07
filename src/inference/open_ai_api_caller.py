@@ -1,5 +1,4 @@
-import os
-import base64
+import os, base64
 
 from openai import OpenAI, RateLimitError, APIError
 from dotenv import load_dotenv
@@ -55,7 +54,10 @@ if __name__ == "__main__":
         {
             "role": "user",
             "content": [
-                {"type": "input_text", "text": "what's in this image?"},
+                {
+                    "type": "input_text",
+                    "text": "what's in this image?",
+                },
                 {
                     "type": "input_image",
                     "image_url": f"data:image/jpeg;base64,{image}",

@@ -11,7 +11,6 @@ system_prompt: |
   }
 
 user_prompt: |
-  AdvertisementImagePath: {AD_IMAGE_PATH}
   OriginalHeadlineHTML: |
     {ORIGINAL_HEADLINE_HTML}
   OriginalSubheadlineHTML: |
