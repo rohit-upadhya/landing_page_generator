@@ -1,10 +1,11 @@
 import base64, os
 
 print(os.getcwd())
-from util.data_types import ErrorTypes
-from util.file_loader import FileLoader
-from util.prompt_builder import Prompter
-from inference.inference import Inference
+from src.util.data_types import ErrorTypes
+from src.util.file_loader import FileLoader
+from src.util.prompt_builder import Prompter
+from src.inference.inference import Inference
+from src.postprocessing.post_processor import PostProcessor
 
 
 class PLP:
@@ -60,8 +61,11 @@ class PLP:
 
     def _post_processor(
         self,
+        response: str,
     ):
-        pass
+        post_processor = PostProcessor(response=response)
+        error_list, parsable, response_output = post_processor.post_process()
+        return error_list, parsable, response_output
 
     def plp_main(
         self,
@@ -80,7 +84,17 @@ class PLP:
         )
         prompt = prompt_builder.build_chat_prompt()
         response = self._infer(input_prompt=prompt)
+        error_list, parsable, response_output = self._post_processor(response=response)
 
+        result_dict = {
+            "input": self.inputs,
+            "error_list": error_list,
+            "last_parsable_result": {},
+            "model_responses": [response_output],
+        }
+        while len(error_list) > 0:
+            pass
+        print(self._post_processor(response=response))
         return response
 
 
