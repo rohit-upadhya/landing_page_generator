@@ -19,3 +19,20 @@ user_prompt: |
     {MARKETING_INSIGHTS_TEXT}
 
   Strictly analyze the advertisement image, maintain the original HTML class structure, incorporate key product benefits, and return the JSON specified above - nothing else.
+
+reprompts:
+  intial_message: |
+    You have made some mistakes in your generation. Please correct these mistakes enumerated below. Make minimal changes to the new generation, and follow the previous instructions.
+    DO NOT APOLOGIZE, JUST GENERATE THE CORRECTED RESULTS IN THE JSON FORMAT THAT WAS ASKED OF YOU IN THE PREVIOUS MESSAGES.
+  json_parsing_error: |
+    Looks like you made an error with the JSON. It is not parsable, reexamine your previous generation and complete it given the text. Error : {message}{detail}
+    You are to only return the JSON, no fillter words like "Final results" on top, or anything explaining what you did. I just need the JSON.
+  html_headline_parsing_error: |
+    The HTML that you generated as the headline is not proper. Please fix it. Make Minimal changes, and just fix the issue.
+  html_subheadline_parsing_error: |
+    The HTML that you generated as the headline is not proper. Please fix it. Make Minimal changes, and just fix the issue.
+  key_missing_error: |
+    The following keys are missing: {message}.
+    Please read the requriements again, and regenerate the result.
+  final_message: |
+    Keeping in mind all these points, please regenrate the results, keeping in mind the strict rules that have been established. Do not make any mistakes.
