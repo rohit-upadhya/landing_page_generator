@@ -57,3 +57,33 @@ class Prompter:
         else:
             raise ValueError("No text provided. Please provide a query and try again.")
         return final_prompt
+
+    def reprompter(
+        self,
+        current_prompt: list,
+        error_list: list,
+    ):
+        reprompt_messages = self.prompt_template.get("reprompts", {})
+        start_message = reprompt_messages.get("intial_message", "")
+        final_message = self.prompt_template.get("final_message", "")
+        reprompt_content = f"{start_message}\n"
+        error_count = 1
+        for error in error_list:
+            error_type = error.get("error_type", "")
+            error_text = reprompt_messages.get(error_type, "")
+            error_text = error_text.format(
+                message=error.get("message", ""),
+                detail=error.get("detail", ""),
+            )
+            reprompt_content = f"{reprompt_content}\n{error_count}. {error_text}"
+            error_count += 1
+        reprompt_content = f"{reprompt_content}\n{final_message}"
+
+        current_prompt.append(
+            {
+                "role": "user",
+                "content": reprompt_content,
+            }
+        )
+        return current_prompt
+        pass
