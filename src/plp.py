@@ -1,6 +1,8 @@
-import base64, os
+import base64, os, json
 
-print(os.getcwd())
+from datetime import datetime
+from copy import deepcopy
+
 from src.util.data_types import ErrorTypes
 from src.util.file_loader import FileLoader
 from src.util.prompt_builder import Prompter
@@ -13,9 +15,11 @@ class PLP:
         self,
         inputs: dict,
         prompt_template_file: str = "resources/prompt_template.yaml",
+        num_retries: int = 3,
     ):
         self.file_loader = FileLoader()
         self.inputs = inputs
+        self.num_retries = num_retries
         self.prompt_template = self._load_inputs(prompt_template_file)
 
     def _load_inputs(
@@ -88,14 +92,42 @@ class PLP:
 
         result_dict = {
             "input": self.inputs,
-            "error_list": error_list,
+            "error_list": [error_list],
             "last_parsable_result": {},
-            "model_responses": [response_output],
+            "model_responses": [response],
         }
-        while len(error_list) > 0:
-            pass
-        print(self._post_processor(response=response))
-        return response
+        if parsable:
+            result_dict["last_parsable_result"] = response_output
+        retry_num = 1
+        while len(error_list) > 0 and retry_num <= self.num_retries:
+            prompts = prompt_builder.reprompter(
+                current_prompt=prompt, error_list=deepcopy(error_list)
+            )
+            del error_list
+            response = self._infer(input_prompt=prompts)
+            error_list, parsable, response_output = self._post_processor(
+                response=response
+            )
+            result_dict["model_responses"].append(response)
+            if parsable:
+                result_dict["last_parsable_result"] = response_output
+            result_dict["error_list"].append(error_list)
+            retry_num += 1
+        result_dict["final_result"] = result_dict["last_parsable_result"]
+
+        self._logging_results(res_dict=result_dict)
+        return result_dict
+
+    def _logging_results(
+        self,
+        res_dict: dict,
+        dir_path: str = "logs",
+    ) -> None:
+        os.makedirs(dir_path, exist_ok=True)
+        filename = datetime.now().strftime("results_%Y%m%d_%H%M%S.json")
+        filepath = os.path.join(dir_path, filename)
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(res_dict, f, ensure_ascii=False, indent=4)
 
 
 if __name__ == "__main__":
