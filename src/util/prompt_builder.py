@@ -86,4 +86,3 @@ class Prompter:
             }
         )
         return current_prompt
-        pass
