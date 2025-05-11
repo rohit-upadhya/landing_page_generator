@@ -68,19 +68,3 @@ class Validator:
                 "detail": detail,
             }
         )
-
-
-if __name__ == "__main__":
-
-    json_obj = {
-        "headline": "<h1>bad",
-        "subheadline": """<p class="text-lg opacity-80 leading-relaxed">
-        Make your debut unforgettable with lightweight durability, all-day comfort, and an innovative energy return to help you crush nerves, go the distance, and beat your goals.
-        </p>""",
-    }
-    validator = Validator(
-        response_dict=json_obj,
-    )
-    print(validator.validate())
-
-    pass
