@@ -79,10 +79,10 @@ python -m src.plp
 from src.plp import PLP
 
 inputs = {
-    "original_headline_html": "<h1>Original headline</h1>",
-    "original_subheadline_html": "<p>Original subheadline</p>",
-    "marketing_insights_text": "Long form marketing brief…",
-    "image_path": "path/to/hero.png",
+    "original_headline_html": "<original headline html here>",
+    "original_subheadline_html": "<original subheadline html here>",
+    "marketing_insights_text": "<marketing insights text here>",
+    "image_path": "<path of image here>"
 }
 
 plp = PLP(inputs=inputs, num_retries=2)
