@@ -3,6 +3,9 @@
 ## Purpose
 Automates generation of marketing landing‑page copy (headline, subheadline) from existing creative assets and market insights using an LLM. Validates output HTML and stores structured results for downstream integration.
 
+## Workflow
+![Drag Racing](resources/arch.png)
+
 ## Key Features
 - **Prompt Construction** – Builds multimodal chat prompts combining text and Base64‑encoded image.
 - **LLM Inference** – Supports OpenAI models (default `gpt-4.1`), expandable for local models.
@@ -52,8 +55,8 @@ Edit `resources/prompt_template.yaml` to tune system prompt, user prompt placeho
 
 ## Quick Start
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+conda create --name code
+source setup.sh
 pip install -r requirements.txt
 
 python -m src.plp  # uses sample inputs defined in plp.py __main__
@@ -100,7 +103,4 @@ Includes success and failure scenarios for prompt construction, parsing, and HTM
 ## Extending
 - **Local Models** – Implement `_get_local_inference` in `src/inference/inference.py`.
 - **Additional Validation** – Augment `Validator` with new HTML or business‑rule checks.
-- **CI** – Add a GitHub Actions workflow running `pytest` and flake8.
 
-## License
-MIT unless specified otherwise in `LICENSE`.
