@@ -4,7 +4,7 @@
 Automates generation of marketing landing‑page copy (headline, subheadline) from existing creative assets and market insights using an LLM. Validates output HTML and stores structured results for downstream integration.
 
 ## Workflow
-![Drag Racing](resources/arch.png)
+![Workflow](resources/arch.png)
 
 ## Key Features
 - **Prompt Construction** – Builds multimodal chat prompts combining text and Base64‑encoded image.
