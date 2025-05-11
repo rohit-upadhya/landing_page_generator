@@ -1,4 +1,4 @@
-import json, pathlib, pytest, time
+import json
 from src.plp import PLP
 
 
@@ -11,7 +11,13 @@ def _inputs(prompt_yaml, tiny_png):
     }
 
 
-def test_plp_success(fake_openai, prompt_yaml, tiny_png, tmp_path, monkeypatch):
+def test_plp_success(
+    fake_openai,
+    prompt_yaml,
+    tiny_png,
+    tmp_path,
+    monkeypatch,
+):
     # ensure prompts load from tmp YAML
     monkeypatch.setattr(
         "src.plp.PLP._load_inputs",

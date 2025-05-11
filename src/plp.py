@@ -1,4 +1,6 @@
-import base64, os, json
+import base64
+import os
+import json
 
 from datetime import datetime
 from copy import deepcopy
@@ -58,8 +60,8 @@ class PLP:
         try:
             with open(image_path, "rb") as image_file:
                 return base64.b64encode(image_file.read()).decode("utf-8")
-        except:
-            print("Issue loading image. Contact admin.")
+        except Exception as e:
+            print(f"Issue loading image - {e}. Contact admin.")
             raise
 
     def _post_processor(
