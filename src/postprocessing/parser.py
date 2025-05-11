@@ -1,6 +1,6 @@
 import json
 
-from util.data_types import ErrorTypes
+from src.util.data_types import ErrorTypes
 
 
 class Parser:

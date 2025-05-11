@@ -3,7 +3,6 @@ import base64, os, json
 from datetime import datetime
 from copy import deepcopy
 
-from src.util.data_types import ErrorTypes
 from src.util.file_loader import FileLoader
 from src.util.prompt_builder import Prompter
 from src.inference.inference import Inference
@@ -122,7 +121,7 @@ class PLP:
         self,
         res_dict: dict,
         dir_path: str = "logs",
-    ) -> None:
+    ):
         os.makedirs(dir_path, exist_ok=True)
         filename = datetime.now().strftime("results_%Y%m%d_%H%M%S.json")
         filepath = os.path.join(dir_path, filename)
