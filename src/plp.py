@@ -166,7 +166,7 @@ Feature: Suitable for elite racers and casual runners.
 Benefit: Allows beginners to boost performance while offering the necessary sup
 Innovative Colorways
 Feature: Available in multiple stylish color combinations.
-Benefit: Provides a combination of style and speed, letting runners look and feel 
+Benefit: Provides a combination of style and speed, letting runners look and feel
 Target Audience:
 Potential Audiences:
 Elite and Competitive Runners

@@ -71,13 +71,13 @@ class Validator:
 
 
 if __name__ == "__main__":
-    import json
 
     json_obj = {
-        "headline": '<h class="font-extrabold text-4xl lg:text-6xl tracking-tight md:-mb-4 flex flex-c"><span class="relative">Conquer Your First Marathon with Nike Vaporfly 3</span><span class="whitespace-nowrap relative "><span class="mr-3 sm:mr-4 md:mr-5">Confidence for</span><span class=" relative whitespace-nowrap"><span class="absolute bg-neutral-content -left-2 -top-1 -bottom-1 -right-2 md:-l"><span class="relative text-neutral">Race-Day Success</span></span></span></span></h1>',
-        "subheadlin": '<p class="text-lg opacity-80 leading-relaxed">Make your debut unforgettable with lightweight durability, all-day comfort, and an innovative energy return to help you crush nerves, go the distance, and beat your goals.</p>',
+        "headline": "<h1>bad",
+        "subheadline": """<p class="text-lg opacity-80 leading-relaxed">
+        Make your debut unforgettable with lightweight durability, all-day comfort, and an innovative energy return to help you crush nerves, go the distance, and beat your goals.
+        </p>""",
     }
-    # json_obj = json.loads(string)
     validator = Validator(
         response_dict=json_obj,
     )

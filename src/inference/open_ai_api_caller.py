@@ -1,4 +1,5 @@
-import os, base64
+import os
+import base64
 
 from openai import OpenAI, RateLimitError, APIError
 from dotenv import load_dotenv
