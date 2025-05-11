@@ -1,5 +1,5 @@
-from inference.open_ai_api_caller import OpenAICaller
-from util.data_types import ModelType
+from src.inference.open_ai_api_caller import OpenAICaller
+from src.util.data_types import ModelType
 
 
 class Inference:
