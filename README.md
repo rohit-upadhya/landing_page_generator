@@ -87,7 +87,6 @@ inputs = {
 
 plp = PLP(inputs=inputs, num_retries=2)
 result = plp.plp_main()
-print(result["final_result"])      # validated JSON with new copy
 ```
 
 ## Output Schema
