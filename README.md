@@ -1,1 +1,106 @@
-# optimeleon_challenge
+# PLP – Personalized Landing‑Page Generator
+
+## Purpose
+Automates generation of marketing landing‑page copy (headline, subheadline) from existing creative assets and market insights using an LLM. Validates output HTML and stores structured results for downstream integration.
+
+## Key Features
+- **Prompt Construction** – Builds multimodal chat prompts combining text and Base64‑encoded image.
+- **LLM Inference** – Supports OpenAI models (default `gpt-4.1`), expandable for local models.
+- **Post‑Processing** – JSON parsing, HTML sanity checks, schema validation, error cataloguing.
+- **Autoretry** – Reprompts on validation failures up to a configurable retry limit.
+- **Structured Logging** – Persists full interaction trace and final JSON result under `logs/`.
+
+## Repository Layout
+```
+src/
+  inference/           # OpenAI & future model wrappers
+  postprocessing/      # Parser, Validator, PostProcessor
+  util/                # FileLoader, enums, helpers
+  plp.py               # Pipeline entry‑point class
+resources/
+  prompt_template.yaml # YAML template with system/user/reprompt blocks
+  test.png             # Sample image for quick run
+tests/                 # pytest suites
+logs/                  # Auto‑generated JSON run logs
+```
+
+## Requirements
+- Python ≥ 3.10  
+- `pip install -r requirements.txt`
+
+Main runtime libraries:
+```
+openai
+python-dotenv
+PyYAML
+lxml
+```
+
+## Configuration
+Create `.env.dev` (or `.env`) with:
+```
+OPENAI_API_KEY=sk-…
+```
+
+Optional environment variables:
+```
+OPENAI_API_BASE=…
+OPENAI_API_MODEL=gpt-4.1
+```
+
+Edit `resources/prompt_template.yaml` to tune system prompt, user prompt placeholders, and reprompt texts.
+
+## Quick Start
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+python -m src.plp  # uses sample inputs defined in plp.py __main__
+```
+
+### Custom Run
+```python
+from src.plp import PLP
+
+inputs = {
+    "original_headline_html": "<h1>Original headline</h1>",
+    "original_subheadline_html": "<p>Original subheadline</p>",
+    "marketing_insights_text": "Long form marketing brief…",
+    "image_path": "path/to/hero.png",
+}
+
+plp = PLP(inputs=inputs, num_retries=2)
+result = plp.plp_main()
+print(result["final_result"])      # validated JSON with new copy
+```
+
+## Output Schema
+```jsonc
+{
+  "headline":   "<h1>…</h1>",
+  "subheadline":"<p>…</p>"
+}
+```
+The HTML strings must be well‑formed; the validator rejects malformed markup.
+
+## Error Codes
+See `src/util/data_types.py` for enum values including:
+- `JSON_PARSING_ERROR`
+- `HTML_HEADLINE_PARSING_ERROR`
+- `HTML_SUBHEADLINE_PARSING_ERROR`
+- `KEY_MISSING_ERROR`
+
+## Testing
+```bash
+pytest -q
+```
+Includes success and failure scenarios for prompt construction, parsing, and HTML validation.
+
+## Extending
+- **Local Models** – Implement `_get_local_inference` in `src/inference/inference.py`.
+- **Additional Validation** – Augment `Validator` with new HTML or business‑rule checks.
+- **CI** – Add a GitHub Actions workflow running `pytest` and flake8.
+
+## License
+MIT unless specified otherwise in `LICENSE`.
