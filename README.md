@@ -71,7 +71,7 @@ conda create --name code
 source setup.sh
 pip install -r requirements.txt
 
-python -m src.plp  # uses sample inputs defined in plp.py __main__
+python -m src.plp
 ```
 
 ### Custom Run
