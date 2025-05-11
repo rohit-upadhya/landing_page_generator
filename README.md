@@ -4,7 +4,7 @@
 Automates generation of marketing landing‑page copy (headline, subheadline) from existing creative assets and market insights using an LLM. Validates output HTML and stores structured results for downstream integration.
 
 ## Workflow
-![Workflow](resources/arch.png)
+![Workflow](./resources/arch.png)
 
 ## Key Features
 - **Prompt Construction** – Builds multimodal chat prompts combining text and Base64‑encoded image.
@@ -53,6 +53,18 @@ OPENAI_API_MODEL=gpt-4.1
 
 Edit `resources/prompt_template.yaml` to tune system prompt, user prompt placeholders, and reprompt texts.
 
+Module can be initialized in another module by the follwoing line:
+`plp = PLP(inputs=inputs)`
+
+Inputs need to be in a dictionary in the following format :
+```
+inputs = {
+    "original_headline_html": "<original headline html here>",
+    "original_subheadline_html": "<original subheadline html here>",
+    "marketing_insights_text": "<marketing insights text here>",
+    "image_path": "<path of image here>"
+}
+```
 ## Quick Start
 ```bash
 conda create --name code
@@ -103,4 +115,5 @@ Includes success and failure scenarios for prompt construction, parsing, and HTM
 ## Extending
 - **Local Models** – Implement `_get_local_inference` in `src/inference/inference.py`.
 - **Additional Validation** – Augment `Validator` with new HTML or business‑rule checks.
+- **Visualization** - Could use Streamlit to load inputs and obtain necessary outputs. can be made into a one-tab visualizations. For local models, can also enter Huggingface models and enable loading of local models through streamlit.
 
